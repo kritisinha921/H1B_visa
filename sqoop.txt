@@ -1,0 +1,7 @@
+create database if not exists question11;
+use question11;
+create table question11(job_title varchar(100),success_rate float);
+
+sqoop export --connect jdbc:mysql://localhost/question11 --username root --password 'root' --table question11 --update-mode allowinsert  --export-dir /Project/ques10 --input-fields-terminated-by ',' ;
+
+mysql -u root -p'root' -e 'select * from question11.question11';

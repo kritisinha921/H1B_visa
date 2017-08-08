@@ -1,0 +1,12 @@
+Q.6) INSERT OVERWRITE LOCAL DIRECTORY '/home/hduser/que6.csv' row format delimited fields terminated by ','
+select a.case_status,round((case_appl/tot_app*100),2)as per,a.year,b.tot_app from (select year,case_status,count(case_status)as case_appl from h1b_final group by year,case_status) a join (select year,count(case_status)as tot_app from h1b_final group by year)b on a.year=b.year order by a.case_status;
+
+Q.7) INSERT OVERWRITE LOCAL DIRECTORY '/home/hduser/pictures/' row format delimited fields terminated by ',' select year,count(*) as total_applications from h1b_final group by year order by year asc;
+
+Q.9) INSERT OVERWRITE LOCAL DIRECTORY '/home/hduser/ques9' row format delimited fields terminated by ','
+select b.employer_name , round((b.counts/a.tot_app*100),2)as success_rate from (select count(*) as tot_app from h1b_final)a, (select employer_name, count(*) as counts from h1b_final where case_status ='CERTIFIED' OR case_status = 'CERTIFIED WITHDRAWN' group by employer_name)b order by success_rate desc limit 10;
+
+Q.10) INSERT OVERWRITE LOCAL DIRECTORY '/home/hduser/ques10' row format delimited fields terminated by ','
+select b.job_title , round((b.counts/a.tot_app*100),2)as success_rate from (select count(*) as tot_app from h1b_final)a, (select job_title, count(*) as counts from h1b_final where case_status ='CERTIFIED' OR case_status = 'CERTIFIED WITHDRAWN' group by job_title)b order by success_rate desc limit 10;
+
+
